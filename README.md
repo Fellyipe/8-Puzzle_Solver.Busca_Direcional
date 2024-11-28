@@ -7,7 +7,7 @@ Este projeto é uma implementação do problema das 8 fichas, resolvido utilizan
 - 
 
 ## Como Executar (ainda incompleto)
-1. Clone o repositório
-2. Instale as dependências
+1. Clone o repositório;
+2. Instale as dependências utilizando o comando `pip install -r requirements.txt`;
 3. Execute o script `main.py` para visualizar a resolução do problema.
 
