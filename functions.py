@@ -34,3 +34,20 @@ def generate_neighbors(board):
             neighbors.append(new_board)
 
     return neighbors
+
+# Converte uma matriz para uma tupla (necessário para armazenar estados em um conjunto)
+def board_to_tuple(board):
+    return tuple(tuple(row) for row in board)
+
+# Verifica se um estado foi visitado
+def is_visited(board, visited):
+    board_tuple = board_to_tuple(board)
+    return board_tuple in visited
+
+# Marca um estado como visitado
+def mark_visited(board, visited):
+    board_tuple = tuple(map(tuple, board))
+    if board_tuple not in visited:
+        visited.add(board_tuple)
+        return True
+    return False
