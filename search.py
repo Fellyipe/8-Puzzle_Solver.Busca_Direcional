@@ -29,8 +29,8 @@ def bidirectional_search(start_board, goal_board):
                 if not fun.is_visited(neighbor, visited_start):
                     fun.mark_visited(neighbor, visited_start)
                     stack.append(neighbor)
-                    print("\n\033[34mDFS Vizinho na iteração \033[0m" + str(i))
-                    print(neighbor)
+                    # print("\n\033[34mDFS Vizinho na iteração \033[0m" + str(i))
+                    # print(neighbor)
 
         # Passo da busca em largura
         if queue:
@@ -42,8 +42,8 @@ def bidirectional_search(start_board, goal_board):
                 if not fun.is_visited(neighbor, visited_goal):
                     fun.mark_visited(neighbor, visited_goal)
                     queue.append(neighbor)
-                    print("\n\033[33mBFS Vizinho na iteração \033[0m" + str(i))
-                    print(neighbor)
+                    # print("\n\033[33mBFS Vizinho na iteração \033[0m" + str(i))
+                    # print(neighbor)
 
     # Se nenhum estado intermediário for encontrado
     return None
