@@ -5,24 +5,24 @@ import time
 
 # Estado inicial do puzzle
 initial_board = np.array([
-    [4, 2, 3],
-    [6, 8, 1],
-    [7, 0, 5]
+    [1, 2, 3],
+    [8, 0, 5],
+    [4, 7, 6]
 ])
 
 # Estado final esperado do puzzle
 objective_board = np.array([
-    [4, 3, 7],
-    [8, 5, 1],
-    [0, 2, 6]
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
 ])
 
 # Estado inicial do puzzle 4x4
 initial_board_4x4 = np.array([
-    [12, 2, 10, 4],
-    [13, 5, 3, 1],
-    [8, 9, 11, 7],
-    [6, 0, 14, 15]
+    [5, 1, 2, 4],
+    [9, 6, 3, 7],
+    [10, 11, 0, 8],
+    [13, 14, 15, 12]
 ])
 
 # Estado final esperado do puzzle 4x4
@@ -59,13 +59,14 @@ if fun.is_solvable(initial_board, objective_board):
 
     # Executa a busca bidirecional
     start_time = time.time()
-    intersection = search.bidirectional_search(initial_board, objective_board)
+    solution_path = search.bidirectional_search(initial_board, objective_board)
     end_time = time.time()
     elapsed_time = end_time - start_time
 
-    if intersection.any():
+    if solution_path:
         print("Interseção encontrada!")
-        print("Estado da intersecção:\n", np.array(intersection))
+        print("Caminho da solução encontrado:")
+        fun.print_solution_path(solution_path)
     else:
         print("Não foi possível encontrar uma solução.")
 

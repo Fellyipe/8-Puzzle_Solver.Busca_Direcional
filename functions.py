@@ -91,3 +91,16 @@ def is_solvable(board, goal_board):
         goal_zero_row = np.where(goal_board == 0)[0][0]
         
         return ((inversions_start + start_zero_row) % 2 == (inversions_goal + goal_zero_row) % 2)
+    
+def print_board(board):
+    """Imprime o tabuleiro de forma organizada."""
+    for row in board:
+        # Exibe os números, substituindo o 0 por um espaço em branco
+        print(" ".join(str(x) if x != 0 else " " for x in row))
+    print()  # Linha em branco para separar os estados
+
+def print_solution_path(solution_path):
+    """Imprime o caminho da solução, exibindo cada estado com seu número de passo."""
+    for step, state in enumerate(solution_path):
+        print(f"Passo {step}:")
+        print_board(state)
