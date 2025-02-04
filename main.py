@@ -2,6 +2,7 @@ import numpy as np
 import functions as fun
 import search
 import time
+import json
 
 # Estado inicial do puzzle
 initial_board = np.array([
@@ -54,12 +55,12 @@ objective_board_5x5 = np.array([
 # Profundidade máxima para a DFS
 MAX_DEPTH = 20
 
-if fun.is_solvable(initial_board, objective_board):
+if fun.is_solvable(initial_board_5x5, objective_board_5x5):
     print("\033[32mEsse tabuleiro é solucionável\033[0m\n")
 
     # Executa a busca bidirecional
     start_time = time.time()
-    solution_path = search.bidirectional_search(initial_board, objective_board)
+    solution_path = search.bidirectional_search(initial_board_5x5, objective_board_5x5)
     end_time = time.time()
     elapsed_time = end_time - start_time
 
@@ -67,6 +68,14 @@ if fun.is_solvable(initial_board, objective_board):
         print("Interseção encontrada!")
         print("Caminho da solução encontrado:")
         fun.print_solution_path(solution_path)
+
+# Converte todos os arrays do NumPy no solution_path para listas
+        solution_path_serializable = [state.tolist() if isinstance(state, np.ndarray) else state for state in solution_path]
+
+    # Salva o caminho da solução em um arquivo JSON
+        with open("animacao\\solucao5x5.json", "w") as f:
+            json.dump(solution_path_serializable, f)
+
     else:
         print("Não foi possível encontrar uma solução.")
 
