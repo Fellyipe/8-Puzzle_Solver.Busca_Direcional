@@ -60,7 +60,7 @@ if fun.is_solvable(initial_board_5x5, objective_board_5x5):
 
     # Executa a busca bidirecional
     start_time = time.time()
-    solution_path = search.bidirectional_search(initial_board_5x5, objective_board_5x5)
+    solution_path = search.bidirectional_breadth_first_search(initial_board_5x5, objective_board_5x5)
     end_time = time.time()
     elapsed_time = end_time - start_time
 
