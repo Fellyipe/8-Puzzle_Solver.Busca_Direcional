@@ -4,7 +4,7 @@ Este projeto é uma implementação do problema das 8 fichas, resolvido utilizan
 
 ## Tecnologias Utilizadas
 - Python
-- 
+- Bibliotecas Pygame e NumPy
 
 ## Como Executar (ainda incompleto)
 1. Clone o repositório;
