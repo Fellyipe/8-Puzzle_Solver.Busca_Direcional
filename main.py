@@ -9,7 +9,7 @@ from animation import animate_solution
 # Inicialização do Pygame
 pygame.init()
 surface = pygame.display.set_mode((600, 600))
-pygame.display.set_caption("Menu - 8-Puzzle")
+pygame.display.set_caption("Menu - N-Puzzle")
 
 tile_images = {
     1: pygame.image.load("imagens/1.png").convert_alpha(),
@@ -122,7 +122,7 @@ def start_search():
 def draw_menu():
     global selected_algorithm, selected_board_size, show_animation, result_label
     
-    menu = pygame_menu.Menu('8-Puzzle - Escolha', 600, 600, theme=pygame_menu.themes.THEME_DARK)
+    menu = pygame_menu.Menu('N-Puzzle - Solucionador', 600, 600, theme=pygame_menu.themes.THEME_DARK)
 
     # Adiciona um dropdown para escolher o algoritmo
     menu.add.dropselect('Algoritmo :', 
