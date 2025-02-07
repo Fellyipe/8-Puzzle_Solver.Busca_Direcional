@@ -2,17 +2,19 @@ import pygame
 import sys
 import numpy as np
 
-def draw_board(screen, board, tile_size, images):
+def draw_board(screen, board, tile_size, images, offset_x=0, offset_y=0):
     """
     Desenha o tabuleiro usando imagens.
     'images' é um dicionário que mapeia cada número à sua imagem.
     A célula vazia pode ser representada pela imagem '0' ou simplesmente ignorada.
     """
-    screen.fill((30, 30, 30))
+    # screen.fill((30, 30, 30))
     rows, cols = board.shape
+    board_rect = pygame.Rect(offset_x, offset_y, cols * tile_size, rows * tile_size)
+    pygame.draw.rect(screen, (30, 30, 30), board_rect)
     for i in range(rows):
         for j in range(cols):
-            rect = pygame.Rect(j * tile_size, i * tile_size, tile_size, tile_size)
+            rect = pygame.Rect(j * tile_size + offset_x, i * tile_size + offset_y, tile_size, tile_size)
             value = board[i, j]
             if value in images:
                 img = pygame.transform.scale(images[value], (tile_size, tile_size))
@@ -36,7 +38,7 @@ def diff_states(state1, state2):
     pos2 = np.argwhere(state2 == 0)[0]
     return tuple(pos1), tuple(pos2)
 
-def animate_move(screen, images, start_state, end_state, tile_size, duration=500, fps=30):
+def animate_move(screen, images, start_state, end_state, tile_size, duration=500, fps=30, offset_x=0, offset_y=0):
     """
     Anima a transição suave entre start_state e end_state.
     - duration: duração total da animação (ms).
@@ -57,8 +59,8 @@ def animate_move(screen, images, start_state, end_state, tile_size, duration=500
     moving_piece = start_state[moving_from[0], moving_from[1]]
     
     # Converter as posições para coordenadas em pixels
-    start_px = (moving_from[1] * tile_size, moving_from[0] * tile_size)
-    end_px = (moving_to[1] * tile_size, moving_to[0] * tile_size)
+    start_px = (moving_from[1] * tile_size + offset_x, moving_from[0] * tile_size + offset_y)
+    end_px = (moving_to[1] * tile_size + offset_x, moving_to[0] * tile_size + offset_y)
     
     for f in range(frames):
         t = f / frames  # fator de interpolação entre 0 e 1
@@ -72,7 +74,7 @@ def animate_move(screen, images, start_state, end_state, tile_size, duration=500
         temp_board[moving_to[0], moving_to[1]] = 0
 
         # Primeiro, desenha o estado base (end_state)
-        draw_board(screen, temp_board, tile_size, images)
+        draw_board(screen, temp_board, tile_size, images, offset_x, offset_y)
         # Em seguida, sobrepõe a imagem da peça que se move na posição interpolada
         rect = pygame.Rect(current_x, current_y, tile_size, tile_size)
         piece_img = pygame.transform.scale(images[moving_piece], (tile_size, tile_size))

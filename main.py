@@ -2,6 +2,7 @@ import pygame
 import pygame_menu
 import time
 import search
+import search_with_animation as sa
 import numpy as np
 import functions as fun
 from animation import animate_solution
@@ -46,31 +47,33 @@ show_animation = False
 execution_time = None
 objective_board = None
 result_label = None
+initial_board = None
+objective_board = None
 
 # Função para iniciar a busca com a variante escolhida
 def start_search():
-    global execution_time, solution_path, result_label
+    global execution_time, solution_path, result_label, initial_board, objective_board
 
-    solution_path = None    
+    solution_path = None
     initial_board = None
 
     if selected_board_size == 1:
         initial_board = np.array([
-            [1, 2, 3],
-            [8, 0, 5],
+            [0, 2, 3],
+            [1, 8, 5],
             [4, 7, 6]
         ])
         objective_board = np.array([
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 0]
-    ])
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 0]
+        ])
     elif selected_board_size == 2:
         initial_board = np.array([
             [5, 1, 2, 4],
-            [9, 6, 3, 7],
-            [10, 11, 0, 8],
-            [13, 14, 15, 12]
+            [6, 0, 3, 8],
+            [9, 10, 7, 15],
+            [13, 14, 12, 11]
         ])
         objective_board = np.array([
         [1, 2, 3, 4],
@@ -80,11 +83,11 @@ def start_search():
     ])
     elif selected_board_size == 3:
         initial_board = np.array([
-            [2, 6, 8, 3, 4],
-            [16, 1, 13, 9, 5],
-            [0, 7, 12, 14, 10],
-            [21, 11, 17, 19, 15],
-            [22, 23, 18, 24, 20]
+            [1, 2, 3, 9, 4],
+            [6, 7, 8, 0, 5],
+            [11, 12, 13, 14, 10],
+            [16, 17, 18, 19, 15],
+            [21, 22, 23, 24, 20]
         ])
         objective_board = np.array([
             [1, 2, 3, 4, 5],
@@ -138,6 +141,7 @@ def draw_menu():
 
     menu.add.button('Iniciar Busca', start_search)
     menu.add.button('Mostrar animação', show_animation_solution)
+    menu.add.button('Animar execução', show_bidirectional_search_dfs_bfs_animated)
     
     result_label = menu.add.label('Resultados: Aguardando...', font_size=26)
 
@@ -162,6 +166,65 @@ def show_animation_solution():
         animate_solution(solution_path, tile_images, tile_size=120, delay=150, move_duration=100, exit_callback=main)
     else:
         result_label.set_title("Nenhuma solução para animar.")
+
+def show_bidirectional_search_dfs_bfs_animated():
+
+    global selected_algorithm, selected_board_size
+
+    if selected_board_size == 1:
+        initial_board = np.array([
+            [0, 2, 3],
+            [1, 8, 5],
+            [4, 7, 6]
+        ])
+        objective_board = np.array([
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 0]
+        ])
+    elif selected_board_size == 2:
+        initial_board = np.array([
+            [5, 1, 2, 4],
+            [6, 0, 3, 8],
+            [9, 10, 7, 15],
+            [13, 14, 12, 11]
+        ])
+        objective_board = np.array([
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 0]
+    ])
+    elif selected_board_size == 3:
+        initial_board = np.array([
+            [1, 2, 3, 9, 4],
+            [6, 7, 8, 0, 5],
+            [11, 12, 13, 14, 10],
+            [16, 17, 18, 19, 15],
+            [21, 22, 23, 24, 20]
+        ])
+        objective_board = np.array([
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15],
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 0]
+    ])
+
+    if fun.is_solvable(initial_board, objective_board):
+        result_label.set_title("Esse tabuleiro é solucionável")
+    else:
+        result_label.set_title("Tabuleiro insolucionável!")
+        return
+
+    if selected_algorithm == 1:
+        sa.bidirectional_search_dfs_bfs_animated(initial_board, objective_board, tile_images, exit_callback=main)
+    elif selected_algorithm == 2:
+        sa.bidirectional_search_bfs_dfs_animated(initial_board, objective_board, tile_images, exit_callback=main)
+    elif selected_algorithm == 3:
+        sa.bidirectional_search_dfs_dfs_animated(initial_board, objective_board, tile_images, exit_callback=main)
+    elif selected_algorithm == 4:
+        sa.bidirectional_search_bfs_bfs_animated(initial_board, objective_board, tile_images, exit_callback=main)
 
 # Loop principal do menu
 def main():
