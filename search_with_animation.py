@@ -14,6 +14,13 @@ def bidirectional_search_dfs_bfs_animated(start_board, goal_board, images, exit_
     pygame.init()
     tile_size = 100
     rows, cols = start_board.shape
+    if rows == 3:
+        tile_size = 200
+    elif rows == 4:
+        tile_size = 150
+    elif rows == 5:
+        tile_size = 120
+    rows, cols = start_board.shape
     width = cols * tile_size
     height = rows * tile_size
 
@@ -107,6 +114,13 @@ def bidirectional_search_bfs_dfs_animated(start_board, goal_board, images, exit_
 
     pygame.init()
     tile_size = 100
+    rows, cols = start_board.shape
+    if rows == 3:
+        tile_size = 200
+    elif rows == 4:
+        tile_size = 150
+    elif rows == 5:
+        tile_size = 120
     rows, cols = start_board.shape
     width = cols * tile_size
     height = rows * tile_size
@@ -301,6 +315,13 @@ def bidirectional_search_dfs_dfs_animated(start_board, goal_board, images, exit_
 
     pygame.init()
     tile_size = 100
+    rows, cols = start_board.shape
+    if rows == 3:
+        tile_size = 200
+    elif rows == 4:
+        tile_size = 150
+    elif rows == 5:
+        tile_size = 120
     rows, cols = start_board.shape
     width = cols * tile_size
     height = rows * tile_size
